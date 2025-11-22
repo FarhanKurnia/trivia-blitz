@@ -1,0 +1,482 @@
+:root {
+    --primary-color: #FFC300; /* Kuning Emas, untuk Judul Utama */
+    --secondary-color: #FF5733; /* Oranye Merah, untuk Aksen Timer */
+    --background-dark: #1A1A2E; /* Biru Gelap */
+    --text-light: #F0F0F0;
+    --text-accent: #00bcd4; /* Biru terang untuk beberapa aksen dan glow */
+    --button-bg: linear-gradient(135deg, #00BCD4, #00897B); /* Gradien biru-tosca */
+    --button-hover-bg: linear-gradient(135deg, #00E5FF, #00C853);
+    --border-glow: #00e5ff;
+    --incorrect-red: #D32F2F;
+}
+
+/* Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    /* Background gelap nebula untuk suasana clash of minds (ini adalah background utama) */
+    background: url('../img/background.png') no-repeat center center fixed; 
+    background-size: cover;
+    color: var(--text-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 0; 
+    overflow: hidden; 
+}
+
+.main-wrapper {
+    position: relative;
+    width: 100vw; 
+    height: 100vh; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Page Transitions */
+.page {
+    position: absolute;
+    width: 100vw; 
+    height: 100vh; 
+    background: transparent; /* Hapus background default agar background khusus bisa tampil */
+    border-radius: 0; 
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0; /* Padding diatur di dalam child element */
+    text-align: center;
+    transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
+}
+
+.page.hidden {
+    transform: translateX(100vw);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.page.active {
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: all;
+}
+
+
+/* --- 1. Cover Page Styles --- */
+#cover-page {
+    /* Background langsung dari body, kita hanya perlu overlay dan konten */
+    background: none; 
+    box-shadow: none;
+}
+
+.cover-background-img {
+    /* Ini seharusnya untuk gambar background COLOSSEUM di Gambar 1.
+       Jika Gambar 1 itu background utuh, maka ini tidak perlu.
+       Jika Anda ingin gambar latar khusus untuk cover,
+       pastikan path gambarnya benar.
+       Untuk saat ini, saya akan berasumsi background dari body cukup.
+    */
+    display: none; /* Sembunyikan jika background body sudah cukup */
+}
+
+.cover-text-overlay {
+    background: rgba(0, 0, 0, 0.6); 
+    border-radius: 15px;
+    padding: 5vh;
+    max-width: 90vw;
+    width: 700px; 
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+    border: 2px solid var(--border-glow); 
+    box-shadow: 0 0 20px var(--border-glow);
+}
+
+.top-logo-placeholder {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(1.5em, 3vw, 2.5em);
+    font-weight: 700;
+    color: #CCCCCC;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.main-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(3em, 8vw, 6em); 
+    font-weight: 900;
+    color: var(--primary-color);
+    text-shadow: 0 0 15px var(--primary-color), 0 0 25px rgba(255, 195, 0, 0.7);
+    letter-spacing: 5px;
+    margin: 0;
+    line-height: 1;
+}
+
+.subtitle-box {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--text-accent);
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin: 15px 0;
+}
+
+.subtitle {
+    font-size: clamp(1em, 1.5vw, 1.2em);
+    font-weight: 400;
+    color: var(--text-light);
+    text-transform: uppercase;
+}
+
+.smart-battle-text {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(1.2em, 2.5vw, 1.8em);
+    font-weight: 700;
+    color: var(--text-accent);
+    text-shadow: 0 0 8px var(--text-accent);
+    margin-top: 10px;
+    letter-spacing: 2px;
+}
+
+
+/* --- 2. Rules Page Styles --- */
+#rules-page {
+    /* Background image untuk halaman rules yang mengisi penuh */
+    background: url('https://images.unsplash.com/photo-1534796338421-4f169f430588?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center;
+    background-size: cover;
+    position: relative; /* Penting untuk z-index overlay */
+    border: none; /* Hapus border langsung pada page */
+    box-shadow: none; /* Hapus shadow langsung pada page */
+    padding: 0; /* Hapus padding pada page */
+}
+
+/* Tambahkan overlay gelap di atas background image rules page */
+#rules-page::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85); /* Overlay gelap kuat */
+    z-index: 1;
+}
+
+/* Kontainer untuk seluruh konten Rules Page (Judul, Daftar, Tombol) */
+.rules-content-wrapper {
+    position: relative; /* Penting untuk z-index di atas overlay */
+    z-index: 2;
+    background: rgba(36, 36, 64, 0.7); /* Background transparan untuk wrapper konten */
+    border: 2px solid var(--text-accent);
+    box-shadow: 0 0 25px var(--text-accent);
+    width: 90vw;
+    max-width: 900px;
+    height: auto;
+    min-height: 70vh;
+    padding: 50px;
+    border-radius: 15px; /* Beri sudut melengkung pada wrapper konten */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+
+.rules-header {
+    margin-bottom: 30px;
+}
+
+.rules-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(2em, 4vw, 3em);
+    font-weight: 900;
+    color: var(--primary-color);
+    text-shadow: 0 0 10px var(--primary-color);
+}
+
+.rules-subtitle {
+    font-size: clamp(1em, 2vw, 1.5em);
+    font-weight: 700;
+    color: var(--text-light);
+    margin-top: 10px;
+}
+
+.rules-content {
+    text-align: left;
+    max-width: 700px;
+    margin-bottom: 40px;
+    padding: 0 20px;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.4); 
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.rules-content ol {
+    list-style: none;
+    counter-reset: rule-counter;
+}
+
+.rules-content ol li {
+    font-size: clamp(1em, 1.5vw, 1.2em);
+    margin-bottom: 15px;
+    position: relative;
+    padding-left: 40px;
+    line-height: 1.5;
+}
+
+.rules-content ol li::before {
+    counter-increment: rule-counter;
+    content: counter(rule-counter) ".";
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 1.5em;
+    font-weight: 900;
+    color: var(--text-accent);
+    text-shadow: 0 0 5px var(--text-accent);
+}
+
+
+/* --- 3. Game Page Styles (Trivia Blitz) --- */
+#game-page {
+    padding: 0;
+    /* Game page juga bisa punya background khusus jika diinginkan */
+    background: url('https://images.unsplash.com/photo-1558230713-333068e4a70b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center;
+    background-size: cover;
+    position: relative;
+}
+/* Overlay untuk game page */
+#game-page::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75); /* Overlay sedikit lebih terang dari rules */
+    z-index: 1;
+}
+
+#game-page .game-container {
+    background: rgba(36, 36, 64, 0.9); /* Transparansi sedikit agar background terlihat */
+    border-radius: 15px; /* Beri radius pada container game */
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+    padding: 4vh 4vw;
+    width: 90vw;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-width: 1100px;
+    position: relative; /* Penting untuk z-index di atas overlay */
+    z-index: 2;
+}
+
+#game-page .header {
+    margin-bottom: 20px;
+    border-bottom: 3px solid var(--primary-color);
+    padding-bottom: 10px;
+}
+
+#game-page #game-title {
+    font-size: clamp(2.5em, 5vw, 4em);
+    font-weight: 900;
+    color: var(--primary-color);
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+#game-page #question-counter {
+    font-size: clamp(1em, 2vw, 1.3em);
+    margin-top: 5px;
+}
+
+/* Timer Area */
+#game-page .timer-area {
+    position: relative;
+    width: 60%;
+    max-width: 500px;
+    margin: 20px auto;
+    background: #333355;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 8vh; 
+    min-height: 60px;
+}
+
+#game-page #timer-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+    transition: width 0.1s linear;
+    z-index: 1;
+}
+
+#game-page #timer-display {
+    position: relative;
+    font-size: clamp(3em, 7vw, 5em);
+    font-weight: 900;
+    color: var(--text-light);
+    text-shadow: 0 0 10px rgba(255, 195, 0, 0.7);
+    line-height: 8vh;
+    min-height: 60px;
+    z-index: 2;
+}
+
+
+/* Content Area */
+#game-page .content-area {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+#game-page #question-box {
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid var(--border-glow);
+    padding: 30px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    min-height: 15vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 15px var(--border-glow);
+}
+
+#game-page #current-question {
+    font-size: clamp(1.8em, 3.5vw, 2.5em);
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--text-light);
+}
+
+/* Jawaban */
+#game-page #answer-box {
+    background: var(--background-dark);
+    border: 2px dashed var(--secondary-color);
+    padding: 15px;
+    border-radius: 8px;
+    transition: opacity 0.5s;
+    margin-top: 20px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#game-page .answer-label {
+    font-weight: 700;
+    color: var(--secondary-color);
+    display: block;
+    margin-bottom: 5px;
+}
+
+#game-page #correct-answer-text {
+    font-size: clamp(2em, 4vw, 3em);
+    font-weight: 900;
+    color: var(--primary-color);
+}
+
+/* Kontrol Tombol Umum (Untuk Semua Halaman) */
+.main-btn {
+    padding: 15px 35px;
+    font-size: clamp(1.2em, 2vw, 1.8em);
+    font-weight: 900;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.3s;
+    text-transform: uppercase;
+    color: var(--text-light);
+    background: var(--button-bg);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.main-btn:hover:not(:disabled) {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    background: var(--button-hover-bg);
+}
+
+.main-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    filter: grayscale(70%);
+}
+
+#game-page .controls {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+#game-page .controls button {
+    padding: 15px 30px;
+    font-size: clamp(1em, 2vw, 1.3em);
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    text-transform: uppercase;
+    color: var(--text-light);
+    background-color: #555577; 
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+#game-page .controls button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    background-color: #777799;
+}
+
+#game-page #show-answer-btn {
+    background-color: var(--secondary-color);
+}
+#game-page #show-answer-btn:hover:not(:disabled) {
+    background-color: #FF7755;
+}
+
+#game-page #next-question-btn {
+    background-color: var(--primary-color);
+    color: var(--background-dark);
+}
+#game-page #next-question-btn:hover:not(:disabled) {
+    background-color: #FFD700;
+}
+
+
+/* Utility Class */
+.hidden {
+    display: none !important;
+}
+
+/* Animasi Timer Habis */
+.timer-area.time-up #timer-display {
+    color: var(--incorrect-red);
+    animation: flash 1s infinite;
+}
+
+@keyframes flash {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
