@@ -1,7 +1,7 @@
 :root {
     --primary-color: #FFC300; /* Kuning Emas, untuk Judul Utama */
     --secondary-color: #FF5733; /* Oranye Merah, untuk Aksen Timer */
-    --background-dark: #1A1A2E; /* Biru Gelap */
+    --background-dark: #1A1A2E; /* Biru Gelap, untuk overlay konten */
     --text-light: #F0F0F0;
     --text-accent: #00bcd4; /* Biru terang untuk beberapa aksen dan glow */
     --button-bg: linear-gradient(135deg, #00BCD4, #00897B); /* Gradien biru-tosca */
@@ -9,7 +9,6 @@
     --border-glow: #00e5ff;
     --incorrect-red: #D32F2F;
 }
-
 /* Base Styles */
 * {
     box-sizing: border-box;
@@ -19,9 +18,8 @@
 }
 
 body {
-    /* Background gelap nebula untuk suasana clash of minds (ini adalah background utama) */
-    background: url('../img/background.png') no-repeat center center fixed; 
-    background-size: cover;
+    /* Background default cadangan/jika tidak ada page yang aktif */
+    background-color: #111111; 
     color: var(--text-light);
     display: flex;
     justify-content: center;
@@ -43,19 +41,28 @@ body {
 
 /* Page Transitions */
 .page {
+    /* PENTING: Position absolute + mengisi penuh layar */
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100vw; 
     height: 100vh; 
-    background: transparent; /* Hapus background default agar background khusus bisa tampil */
-    border-radius: 0; 
-    box-shadow: none;
+    
+    /* Gunakan Flexbox untuk memusatkan KONTEN di dalam halaman */
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 0; /* Padding diatur di dalam child element */
+    justify-content: center; /* Pusatkan vertikal */
+    align-items: center; /* Pusatkan horizontal */
+
+    background: transparent; 
+    padding: 0; 
     text-align: center;
     transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
+    
+    /* Atur default background agar tidak mengganggu transisi */
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
 }
 
 .page.hidden {
@@ -71,24 +78,28 @@ body {
 }
 
 
-/* --- 1. Cover Page Styles --- */
+/* --- 1. Cover Page Styles (Background Koloseum/Gambar 9818c1.jpg) --- */
 #cover-page {
-    /* Background langsung dari body, kita hanya perlu overlay dan konten */
-    background: none; 
-    box-shadow: none;
+    /* Background Khusus Cover Page */
+    background-image: url('../img/background.webp'); /* GANTI dengan path ke gambar Koloseum Anda (misalnya 'img/9818c1.jpg') */
+    /* Pastikan gambar Koloseum Anda diletakkan di dalam folder img/ */
+    background-color: #000000; /* Fallback */
 }
 
-.cover-background-img {
-    /* Ini seharusnya untuk gambar background COLOSSEUM di Gambar 1.
-       Jika Gambar 1 itu background utuh, maka ini tidak perlu.
-       Jika Anda ingin gambar latar khusus untuk cover,
-       pastikan path gambarnya benar.
-       Untuk saat ini, saya akan berasumsi background dari body cukup.
-    */
-    display: none; /* Sembunyikan jika background body sudah cukup */
+/* Tambahkan overlay gelap di atas background cover page */
+#cover-page::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Overlay lebih tipis agar gambar Colosseum terlihat */
+    z-index: 1;
 }
 
 .cover-text-overlay {
+    /* Box abu-abu konten */
     background: rgba(0, 0, 0, 0.6); 
     border-radius: 15px;
     padding: 5vh;
@@ -103,6 +114,17 @@ body {
     position: relative;
     border: 2px solid var(--border-glow); 
     box-shadow: 0 0 20px var(--border-glow);
+    z-index: 2; /* Di atas overlay */
+}
+
+.cover-background-img {
+    /* Ini seharusnya untuk gambar background COLOSSEUM di Gambar 1.
+       Jika Gambar 1 itu background utuh, maka ini tidak perlu.
+       Jika Anda ingin gambar latar khusus untuk cover,
+       pastikan path gambarnya benar.
+       Untuk saat ini, saya akan berasumsi background dari body cukup.
+    */
+    display: none; /* Sembunyikan jika background body sudah cukup */
 }
 
 .top-logo-placeholder {
@@ -151,15 +173,12 @@ body {
 }
 
 
-/* --- 2. Rules Page Styles --- */
+/* --- 2. Rules Page Styles (Background Hutan Berkabut) --- */
 #rules-page {
-    /* Background image untuk halaman rules yang mengisi penuh */
-    background: url('https://images.unsplash.com/photo-1534796338421-4f169f430588?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center;
-    background-size: cover;
-    position: relative; /* Penting untuk z-index overlay */
-    border: none; /* Hapus border langsung pada page */
-    box-shadow: none; /* Hapus shadow langsung pada page */
-    padding: 0; /* Hapus padding pada page */
+    /* Background Khusus Rules Page */
+    background-image: url('../img/background.webp'); /* Hutan Berkabut */
+    background-color: #101010; /* Fallback */
+    position: relative; 
 }
 
 /* Tambahkan overlay gelap di atas background image rules page */
@@ -170,15 +189,15 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.85); /* Overlay gelap kuat */
+    background: rgba(0, 0, 0, 0.5); /* Overlay gelap kuat agar teks terbaca */
     z-index: 1;
 }
 
 /* Kontainer untuk seluruh konten Rules Page (Judul, Daftar, Tombol) */
 .rules-content-wrapper {
-    position: relative; /* Penting untuk z-index di atas overlay */
-    z-index: 2;
-    background: rgba(36, 36, 64, 0.7); /* Background transparan untuk wrapper konten */
+    position: relative; 
+    z-index: 2; /* Di atas overlay */
+    background: rgba(36, 36, 64, 0.7); 
     border: 2px solid var(--text-accent);
     box-shadow: 0 0 25px var(--text-accent);
     width: 90vw;
@@ -186,7 +205,7 @@ body {
     height: auto;
     min-height: 70vh;
     padding: 50px;
-    border-radius: 15px; /* Beri sudut melengkung pada wrapper konten */
+    border-radius: 15px; 
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -251,14 +270,14 @@ body {
 }
 
 
-/* --- 3. Game Page Styles (Trivia Blitz) --- */
+/* --- 3. Game Page Styles (Trivia Blitz - Background Nebula/Gelap) --- */
 #game-page {
-    padding: 0;
-    /* Game page juga bisa punya background khusus jika diinginkan */
-    background: url('https://images.unsplash.com/photo-1558230713-333068e4a70b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center;
-    background-size: cover;
+    /* Background Khusus Game Page */
+    background-image: url('../img/background-game.webp'); /* Menggunakan nebula/latar gelap Anda (seperti dari body semula) */
+    background-color: #1A1A2E;
     position: relative;
 }
+
 /* Overlay untuk game page */
 #game-page::before {
     content: "";
@@ -267,22 +286,14 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.75); /* Overlay sedikit lebih terang dari rules */
+    background: rgba(0, 0, 0, 0.5);
     z-index: 1;
 }
 
 #game-page .game-container {
-    background: rgba(36, 36, 64, 0.9); /* Transparansi sedikit agar background terlihat */
-    border-radius: 15px; /* Beri radius pada container game */
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
-    padding: 4vh 4vw;
-    width: 90vw;
-    height: 90vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    max-width: 1100px;
-    position: relative; /* Penting untuk z-index di atas overlay */
+    /* Box utama game */
+    background: rgba(36, 36, 64, 0.9); 
+    /* ... style lainnya tetap sama ... */
     z-index: 2;
 }
 
@@ -462,6 +473,70 @@ body {
 }
 #game-page #next-question-btn:hover:not(:disabled) {
     background-color: #FFD700;
+}
+
+/* --- 4. Finish Page Styles --- */
+#finish-page {
+    /* Background Khusus untuk Finish Page (bisa sama dengan cover/game) */
+    background-image: url('../img/background.webp'); /* Nebula/Background Gelap */
+    background-color: #1A1A2E;
+    position: relative;
+}
+
+/* Overlay untuk finish page */
+#finish-page::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.finish-content-overlay {
+    position: relative; 
+    z-index: 2;
+    background: rgba(36, 36, 64, 0.9);
+    border: 3px solid var(--primary-color);
+    box-shadow: 0 0 40px var(--primary-color);
+    width: 80vw;
+    max-width: 650px;
+    padding: 70px 40px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    align-items: center;
+}
+
+.finish-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(3em, 6vw, 5em);
+    font-weight: 900;
+    color: var(--text-accent);
+    text-shadow: 0 0 15px var(--text-accent);
+    line-height: 1;
+}
+
+.finish-subtitle {
+    font-size: clamp(1.5em, 3vw, 2.5em);
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-top: -15px;
+}
+
+.finish-message {
+    font-size: clamp(1em, 1.8vw, 1.5em);
+    color: var(--text-light);
+    margin-top: 10px;
+}
+
+.finish-message-winner {
+    font-size: clamp(1.2em, 2vw, 1.7em);
+    font-weight: 700;
+    color: var(--secondary-color);
 }
 
 

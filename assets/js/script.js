@@ -22,6 +22,8 @@ const INITIAL_TIME = 20;
 const coverPage = document.getElementById('cover-page');
 const rulesPage = document.getElementById('rules-page');
 const gamePage = document.getElementById('game-page');
+const finishPage = document.getElementById('finish-page');
+const restartGameBtn = document.getElementById('restart-game-btn');
 
 const startRulesBtn = document.getElementById('start-rules-btn');
 const startGameFromRulesBtn = document.getElementById('start-game-from-rules-btn');
@@ -33,6 +35,7 @@ const currentQuestionEl = document.getElementById('current-question');
 const answerBox = document.getElementById('answer-box');
 const correctAnswerText = document.getElementById('correct-answer-text');
 const timerArea = document.querySelector('.timer-area');
+const gameContainer = document.querySelector('.game-container'); // <<< AMBIL CONTAINER UTAMA
 
 const showAnswerBtn = document.getElementById('show-answer-btn');
 const nextQuestionBtn = document.getElementById('next-question-btn');
@@ -46,8 +49,11 @@ function showPage(pageId) {
             page.classList.remove('hidden');
             page.classList.add('active');
         } else {
+            // Hilangkan class active dulu untuk memicu transisi
+            page.classList.remove('active'); 
+            // Setelah transisi selesai (sekitar 800ms di CSS), tambahkan hidden
+            // Namun, karena kita menggunakan position: absolute, langsung hilangkan saja:
             page.classList.add('hidden');
-            page.classList.remove('active');
         }
     });
 }
@@ -61,95 +67,113 @@ function resetGameData() {
     questionCounter.textContent = `Soal 0 / ${totalQuestions}`;
     answerBox.classList.add('hidden');
     
-    // Nonaktifkan tombol game di awal
     showAnswerBtn.disabled = true;
     nextQuestionBtn.disabled = true;
+
+    // Pastikan game container terlihat saat game dimulai
+    if (gameContainer) gameContainer.classList.remove('hidden');
 }
 
 function nextQuestion() {
-    resetTimer(); // Pastikan timer bersih sebelum memulai yang baru
+    resetTimer();
     currentQuestionIndex++;
 
     if (currentQuestionIndex >= totalQuestions) {
-        // Game Selesai
-        updateQuestionDisplay('TRIVIA BLITZ SELESAI! Selamat kepada para pemenang.');
-        questionCounter.textContent = `Total Soal: ${totalQuestions}`;
+        // --- LOGIKA GAME SELESAI: Pindah ke halaman baru ---
         
-        // Nonaktifkan semua tombol setelah game selesai
-        [showAnswerBtn, nextQuestionBtn].forEach(btn => btn.disabled = true);
-        return;
+        // Nonaktifkan/sembunyikan tombol di Game Page
+        showAnswerBtn.disabled = true;
+        nextQuestionBtn.disabled = true;
+        timerArea.classList.add('hidden');
+        
+        // PENTING: Sembunyikan kontainer utama Game Page untuk mencegah blank hitam
+        if (gameContainer) gameContainer.classList.add('hidden'); // <<< PERBAIKAN BLANK HITAM
+        
+        // Pindah ke Halaman Akhir
+        showPage('finish-page');
+        
+        return; 
     }
 
+    // --- LOGIKA SOAL BARU ---
+
+    // Pastikan kontainer game terlihat saat ada soal
+    if (gameContainer) gameContainer.classList.remove('hidden'); 
+    
     // Tampilkan Soal Baru
     const q = currentDataset[currentQuestionIndex];
     updateQuestionDisplay(q.pertanyaan);
     questionCounter.textContent = `Soal ${currentQuestionIndex + 1} / ${totalQuestions}`;
-    correctAnswerText.textContent = '---'; // Sembunyikan jawaban lama
+    correctAnswerText.textContent = '---'; 
     answerBox.classList.add('hidden');
-    timerArea.classList.remove('time-up'); // Hapus efek waktu habis jika ada
+    timerArea.classList.remove('time-up');
+    timerArea.classList.remove('hidden'); // Pastikan timer muncul lagi
     
     // Kontrol Tombol untuk Soal Baru
-    // PERUBAHAN UTAMA: Tombol Tampilkan Jawaban diaktifkan segera
-    showAnswerBtn.disabled = false; // <<< INI PERBAIKANNYA
-    nextQuestionBtn.disabled = true; // Hanya aktif setelah jawaban ditampilkan
+    showAnswerBtn.disabled = false;
+    nextQuestionBtn.disabled = true;
     
-    // Mulai Timer Otomatis
     startTimer();
 }
 
-// --- FUNGSI KONTROL WAKTU ---
+// --- FUNGSI KONTROL WAKTU (Tidak ada perubahan signifikan) ---
 function startTimer() {
-    if (timerInterval) clearInterval(timerInterval); // Hentikan timer sebelumnya jika ada
+    // ... (Logika Timer Anda yang sudah ada)
+    if (timerInterval) clearInterval(timerInterval);
     
     timeLeft = INITIAL_TIME;
     timerDisplay.textContent = timeLeft;
     timerBar.style.width = '100%';
-    timerBar.style.transition = 'width 1s linear'; // Reset transisi
+    timerBar.style.transition = 'width 1s linear';
     
     timerInterval = setInterval(() => {
         timeLeft--;
         timerDisplay.textContent = timeLeft;
         timerBar.style.width = `${(timeLeft / INITIAL_TIME) * 100}%`;
         
-        // Perubahan warna di 5 detik terakhir (opsional visual)
         if (timeLeft <= 5) {
-            timerBar.style.backgroundColor = 'var(--secondary-color)';
+            // ... (Efek visual 5 detik terakhir)
         } else {
-            timerBar.style.backgroundColor = ''; // Kembali ke gradien default
+            // ...
         }
         
         if (timeLeft <= 0) {
             clearInterval(timerInterval);
-            timerArea.classList.add('time-up'); // Efek visual waktu habis
-            showAnswerBtn.disabled = false; // Waktu habis, Host wajib menampilkan jawaban
+            timerArea.classList.add('time-up');
+            showAnswerBtn.disabled = false;
         }
     }, 1000);
 }
 
 function resetTimer() {
+    // ... (Logika reset Timer Anda yang sudah ada)
     clearInterval(timerInterval);
     timeLeft = INITIAL_TIME;
     timerDisplay.textContent = INITIAL_TIME;
     timerBar.style.width = '100%';
-    timerBar.style.transition = 'none'; // Hentikan animasi saat reset
-    timerArea.classList.remove('time-up'); // Hapus efek waktu habis
+    timerBar.style.transition = 'none';
+    timerArea.classList.remove('time-up');
 }
 
-// --- FUNGSI JAWABAN ---
+// --- FUNGSI JAWABAN (Tidak ada perubahan signifikan) ---
 function showAnswer() {
-    clearInterval(timerInterval); // Hentikan waktu ketika tombol ini ditekan
+    clearInterval(timerInterval); 
     
     const q = currentDataset[currentQuestionIndex];
     correctAnswerText.textContent = q.jawaban_benar;
     answerBox.classList.remove('hidden');
-    showAnswerBtn.disabled = true; // Setelah diklik, nonaktifkan
+    showAnswerBtn.disabled = true;
     
-    // Setelah menampilkan jawaban, Host dapat melanjutkan ke soal berikutnya
     nextQuestionBtn.disabled = false;
 }
 
 function updateQuestionDisplay(text) {
     currentQuestionEl.textContent = text;
+}
+
+// --- FUNGSI RESTART GAME ---
+function restartGame() {
+    window.location.reload();
 }
 
 
@@ -163,19 +187,20 @@ startRulesBtn.addEventListener('click', () => {
 // Navigasi dari Rules ke Game
 startGameFromRulesBtn.addEventListener('click', () => {
     showPage('game-page');
-    resetGameData(); // Siapkan data game
-    nextQuestion(); // Mulai soal pertama
+    resetGameData(); 
+    nextQuestion(); 
 });
 
 // Kontrol dalam Game Page
 showAnswerBtn.addEventListener('click', showAnswer);
 nextQuestionBtn.addEventListener('click', nextQuestion);
 
+// Tombol MULAI ULANG di Halaman Akhir
+if (restartGameBtn) {
+    restartGameBtn.addEventListener('click', restartGame);
+}
+
 // Inisialisasi: Tampilkan Cover Page saat halaman dimuat
 document.addEventListener('DOMContentLoaded', () => {
     showPage('cover-page');
-    // Jika Anda ingin menguji game langsung, ubah ini:
-    // showPage('game-page');
-    // resetGameData();
-    // nextQuestion();
 });

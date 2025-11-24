@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&family=Orbitron:wght@700;900&family=Oswald:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
-
     <div class="main-wrapper">
         <div id="cover-page" class="page active">
             <div class="cover-content">
@@ -19,7 +18,7 @@
                     <div class="subtitle-box">
                         <p class="subtitle">TOGETHER WE THINK, TOGETHER WE WIN</p>
                     </div>
-                    <p class="smart-battle-text">SMART BATTLE</p>
+                    <p class="smart-battle-text">SMART BATTLE - TRIVIA BLITZ</p>
                     <button id="start-rules-btn" class="main-btn">LANJUT</button>
                 </div>
             </div>
@@ -27,54 +26,58 @@
 
         <div id="rules-page" class="page hidden">
             <div class="rules-content-wrapper">
-<div class="rules-header">
-                <h2 class="rules-title">TRIVIA BLITZ</h2>
-                <p class="rules-subtitle">Peraturan Permainan</p>
+                <div class="rules-header">
+                    <h2 class="rules-title">TRIVIA BLITZ</h2>
+                    <p class="rules-subtitle">Peraturan Permainan</p>
+                </div>
+                <div class="rules-content">
+                    <ol>
+                        <li>Tantangan ini akan menguji kemampuan berpikir, konsentrasi, dan kecepatan berhitung para peserta.</li>
+                        <li>Terdapat 15 soal matematika sederhana yang mencakup operasi tambah, kurang, kali, dan bagi.</li>
+                        <li>Seluruh perhitungan mengikuti kaidah dasar matematika yang berlaku.</li>
+                        <li>Tim yang telah menemukan jawaban dipersilakan membunyikan alat yang tersedia.</li>
+                        <li>Tim yang paling cepat menekan alat berhak memberikan jawaban.</li>
+                        <li>Jika jawaban benar, tim memperoleh skor. Jika jawaban salah, tidak ada pengurangan nilai dan permainan langsung berlanjut ke soal berikutnya.</li>
+                    </ol>
+                    <button id="start-game-from-rules-btn" class="main-btn start-game-btn">START</button>
+                </div>
             </div>
-            <div class="rules-content">
-                <ol>
-                    <li>Tantangan ini akan menguji kemampuan berpikir, konsentrasi, dan kecepatan berhitung para peserta.</li>
-                    <li>Terdapat 15 soal matematika sederhana yang mencakup operasi tambah, kurang, kali, dan bagi.</li>
-                    <li>Seluruh perhitungan mengikuti kaidah dasar matematika yang berlaku.</li>
-                    <li>Tim yang telah menemukan jawaban dipersilakan membunyikan alat yang tersedia.</li>
-                    <li>Tim yang paling cepat menekan alat berhak memberikan jawaban.</li>
-                    <li>Jika jawaban benar, tim memperoleh skor. Jika jawaban salah, tidak ada pengurangan nilai dan permainan langsung berlanjut ke soal berikutnya.</li>
-                </ol>
-                <button id="start-game-from-rules-btn" class="main-btn start-game-btn">START</button>
-            </div>
-
-            </div>
-            
         </div>
 
         <div id="game-page" class="page hidden">
             <div class="game-container">
                 <div class="header">
-                    <h1 id="game-title">TRIVIA BLITZ ⚡</h1>
+                    <h1 id="game-title">TRIVIA BLITZ</h1>
                     <div id="question-counter">Soal 0 / 0</div>
                 </div>
-
                 <div class="timer-area">
                     <div id="timer-bar"></div>
                     <div id="timer-display">20</div>
                     <p class="timer-label">WAKTU TERSISA</p>
                 </div>
-
                 <div class="content-area">
                     <div id="question-box">
                         <p id="current-question">Soal akan muncul di sini.</p>
                     </div>
-                    
                     <div id="answer-box" class="hidden">
                         <span class="answer-label">JAWABAN BENAR:</span>
                         <p id="correct-answer-text">---</p>
                     </div>
                 </div>
-
                 <div class="controls">
                     <button id="show-answer-btn" disabled>Tampilkan Jawaban & Stop Waktu</button>
                     <button id="next-question-btn" disabled>Soal Selanjutnya</button>
                 </div>
+            </div>
+        </div>
+
+        <div id="finish-page" class="page hidden">
+            <div class="finish-content-overlay">
+                <h2 class="finish-title">SELAMAT!</h2>
+                <p class="finish-subtitle">TRIVIA BLITZ SELESAI</p>
+                <p class="finish-message">Terima kasih telah berpartisipasi dalam <strong>CLASH OF MINDS</strong>.</p>
+                <p class="finish-message-winner">Pemenang akan diumumkan segera!</p>
+                <button id="restart-game-btn" class="main-btn">MULAI ULANG</button>
             </div>
         </div>
     </div>
