@@ -35,7 +35,7 @@ const nextQuestionBtn = document.getElementById('next-question-btn');
 async function loadGameData() {
     try {
         // Ganti path ini sesuai lokasi file Anda
-        const response = await fetch('./assets/json/questions.json'); 
+        const response = await fetch('assets/json/questions.json'); 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -58,7 +58,7 @@ async function loadGameData() {
 
 async function loadRulesData() {
     try {
-        const response = await fetch('./assets/json/rules.json');
+        const response = await fetch('assets/json/rules.json');
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
