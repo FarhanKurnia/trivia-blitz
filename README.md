@@ -18,28 +18,7 @@ Proyek ini dibangun menggunakan HTML, CSS, dan JavaScript murni, tanpa *framewor
 
 ## 📋 Struktur Proyek
 Tentu, berikut adalah draf untuk file README.md Anda, disajikan dalam format Markdown standar. Ini mencakup semua fitur utama yang telah kita kembangkan (halaman, timer, responsif, dan data eksternal JSON).
-
-Markdown
-
-# 🧠 CLASH OF MINDS - TRIVIA BLITZ ⚡
-
-Aplikasi web trivia interaktif yang dirancang untuk acara **BSI Day 2025** dengan fokus pada kecepatan, ketepatan, dan tampilan yang modern dan responsif.
-
----
-
-## 🚀 Ikhtisar Fitur Utama
-
-Proyek ini dibangun menggunakan HTML, CSS, dan JavaScript murni, tanpa *framework* eksternal, untuk memastikan kinerja cepat dan kemudahan implementasi.
-
-* **Navigasi Halaman Penuh:** Transisi halus antara 4 halaman utama (Cover, Rules, Game, Finish).
-* **Data Eksternal (JSON):** Data soal (`questions.json`) dan peraturan (`rules.json`) dimuat secara asinkron, memudahkan *update* konten tanpa mengubah logika inti JavaScript.
-* **Timer Interaktif:** Timer mundur 20 detik dengan indikator visual (bar) dan efek peringatan waktu habis.
-* **Game Loop Penuh:** Siklus permainan yang lengkap, dari *start* hingga halaman akhir (`Finish Page`), dengan tombol **"MULAI ULANG"** untuk me-reset permainan.
-* **Desain Responsif:** Tampilan dioptimalkan untuk berbagai perangkat, dari layar *desktop* lebar hingga ponsel (*mobile*) dan *tablet*.
-
----
-
-## 📋 Struktur Proyek
+```
 . ├── assets/ │ 
   │  ├── css/ │ 
   │  │ └── style.css # Styling utama dan media queries │ 
@@ -53,7 +32,7 @@ Proyek ini dibangun menggunakan HTML, CSS, dan JavaScript murni, tanpa *framewor
   │      └── ... 
   └── index.html # Struktur HTML utama (4 halaman game) 
   └── README.md
-
+```
 ---
 
 ## 🖥️ Cara Menjalankan
