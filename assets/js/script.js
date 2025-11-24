@@ -31,6 +31,11 @@ const rulesContentOl = document.querySelector('.rules-content ol'); // Tempat da
 const showAnswerBtn = document.getElementById('show-answer-btn');
 const nextQuestionBtn = document.getElementById('next-question-btn');
 
+// --- Elemen DOM Audio ---
+const soundReady = document.getElementById('sound-ready');
+const soundBegin = document.getElementById('sound-begin');
+const backsoundMusic = document.getElementById('backsound-music');
+
 // --- FUNGSI LOAD DATA ASINKRON ---
 async function loadGameData() {
     try {
@@ -133,11 +138,24 @@ function nextQuestion() {
         
         // PENTING: Sembunyikan kontainer utama Game Page untuk mencegah blank hitam
         if (gameContainer) gameContainer.classList.add('hidden'); // <<< PERBAIKAN BLANK HITAM
+
+        // KUNCI: Hanya PAUSE musik, jangan di-reset (currentTime = 0)
+        if (backsoundMusic) {
+            backsoundMusic.pause(); // <<< Hanya pause, tidak stop/reset
+        }
         
         // Pindah ke Halaman Akhir
         showPage('finish-page');
         
         return; 
+    }
+
+    // --- LOGIKA SOAL BARU ---
+    
+    // Pastikan Backsound diputar saat soal baru dimulai
+    if (backsoundMusic && backsoundMusic.paused) {
+        // Jika musik di-pause (misalnya dari halaman finish), lanjutkan putar
+        backsoundMusic.play().catch(e => console.log("Backsound play error:", e));
     }
 
     // --- LOGIKA SOAL BARU ---
@@ -226,11 +244,22 @@ function restartGame() {
 
 // Navigasi dari Cover ke Rules
 startRulesBtn.addEventListener('click', () => {
+    if (soundReady) soundReady.play().catch(e => console.log("Audio play error:", e));
     showPage('rules-page');
+    loadRulesData();
 });
 
 // Navigasi dari Rules ke Game
 startGameFromRulesBtn.addEventListener('click', () => {
+    // 1. Mainkan sound "let the game begin"
+    if (soundBegin) soundBegin.play().catch(e => console.log("Audio play error:", e));
+    
+    // 2. Mainkan Backsound secara loop
+    if (backsoundMusic) {
+        backsoundMusic.volume = 1; // Atur volume agar tidak terlalu keras
+        backsoundMusic.play().catch(e => console.log("Backsound play error:", e));
+    }
+
     showPage('game-page');
     resetGameData(); 
     nextQuestion(); 
@@ -245,10 +274,10 @@ if (restartGameBtn) {
     restartGameBtn.addEventListener('click', restartGame);
 }
 
-startRulesBtn.addEventListener('click', () => {
-    showPage('rules-page');
-    loadRulesData(); // <<< PANGGIL FUNGSI INI DI SINI
-});
+// startRulesBtn.addEventListener('click', () => {
+//     showPage('rules-page');
+//     loadRulesData(); // <<< PANGGIL FUNGSI INI DI SINI
+// });
 
 // Inisialisasi: Tampilkan Cover Page saat halaman dimuat
 document.addEventListener('DOMContentLoaded', () => {
