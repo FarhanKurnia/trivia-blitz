@@ -1,0 +1,9 @@
+[
+    { "id": 1, "pertanyaan": "Ibu kota negara Jepang adalah...", "jawaban_benar": "Tokyo" },
+    { "id": 2, "pertanyaan": "Satuan dasar untuk gaya dalam sistem SI adalah...", "jawaban_benar": "Newton" },
+    { "id": 3, "pertanyaan": "Siapa Presiden pertama Republik Indonesia?", "jawaban_benar": "Soekarno" },
+    { "id": 4, "pertanyaan": "Organ tubuh yang berfungsi memompa darah ke seluruh tubuh adalah...", "jawaban_benar": "Jantung" },
+    { "id": 5, "pertanyaan": "Planet keenam dari Matahari adalah...", "jawaban_benar": "Saturnus" },
+    { "id": 6, "pertanyaan": "Sungai terpanjang di dunia adalah Sungai...", "jawaban_benar": "Nil" },
+    { "id": 7, "pertanyaan": "Berapa hari dalam setahun kabisat?", "jawaban_benar": "366" }
+]

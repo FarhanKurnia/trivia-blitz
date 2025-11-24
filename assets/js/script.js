@@ -1,22 +1,12 @@
-// --- Data Soal TRIVIA BLITZ ---
-const TRIVIA_DATA = [
-    { id: 1, pertanyaan: "Ibu kota negara Jepang adalah...", jawaban_benar: "Tokyo" },
-    { id: 2, pertanyaan: "Satuan dasar untuk gaya dalam sistem SI adalah...", jawaban_benar: "Newton" },
-    { id: 3, pertanyaan: "Siapa Presiden pertama Republik Indonesia?", jawaban_benar: "Soekarno" },
-    { id: 4, pertanyaan: "Organ tubuh yang berfungsi memompa darah ke seluruh tubuh adalah...", jawaban_benar: "Jantung" },
-    { id: 5, pertanyaan: "Planet keenam dari Matahari adalah...", jawaban_benar: "Saturnus" },
-    { id: 6, pertanyaan: "Sungai terpanjang di dunia adalah Sungai...", jawaban_benar: "Nil" },
-    { id: 7, pertanyaan: "Berapa hari dalam setahun kabisat?", jawaban_benar: "366" },
-    // Tambahkan lebih banyak soal Trivia di sini!
-];
 
 // --- Variabel Global Game ---
-let currentDataset = TRIVIA_DATA;
+let currentDataset = []; // Ganti array kosong
 let currentQuestionIndex = -1;
-let totalQuestions = currentDataset.length;
+let totalQuestions = 0; // Ganti menjadi 0 karena data akan di-load
 let timeLeft = 0;
-let timerInterval = null;
 const INITIAL_TIME = 20;
+let timerInterval = null;
+
 
 // --- Elemen DOM Halaman & Game ---
 const coverPage = document.getElementById('cover-page');
@@ -36,9 +26,64 @@ const answerBox = document.getElementById('answer-box');
 const correctAnswerText = document.getElementById('correct-answer-text');
 const timerArea = document.querySelector('.timer-area');
 const gameContainer = document.querySelector('.game-container'); // <<< AMBIL CONTAINER UTAMA
+const rulesContentOl = document.querySelector('.rules-content ol'); // Tempat daftar peraturan akan di-inject
 
 const showAnswerBtn = document.getElementById('show-answer-btn');
 const nextQuestionBtn = document.getElementById('next-question-btn');
+
+// --- FUNGSI LOAD DATA ASINKRON ---
+async function loadGameData() {
+    try {
+        // Ganti path ini sesuai lokasi file Anda
+        const response = await fetch('/assets/json/questions.json'); 
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        
+        // Tetapkan data yang sudah di-load ke variabel global
+        currentDataset = data;
+        totalQuestions = currentDataset.length;
+        
+        console.log(`Data berhasil dimuat. Total soal: ${totalQuestions}`);
+        
+        // Aktifkan tombol navigasi setelah data dimuat
+        if (startRulesBtn) startRulesBtn.disabled = false;
+        
+    } catch (error) {
+        console.error("Gagal memuat data pertanyaan:", error);
+        alert("Gagal memuat data pertanyaan. Silakan cek file questions.json.");
+    }
+}
+
+async function loadRulesData() {
+    try {
+        const response = await fetch('/assets/json/rules.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const rulesArray = await response.json();
+        
+        // Setelah data dimuat, tampilkan di halaman
+        displayRules(rulesArray); 
+    } catch (error) {
+        console.error("Gagal memuat data peraturan:", error);
+    }
+}
+
+function displayRules(rulesArray) {
+    if (!rulesContentOl) return;
+
+    // Bersihkan daftar yang mungkin sudah ada
+    rulesContentOl.innerHTML = ''; 
+
+    // Isi daftar dengan data dari JSON
+    rulesArray.forEach(rule => {
+        const listItem = document.createElement('li');
+        listItem.textContent = rule;
+        rulesContentOl.appendChild(listItem);
+    });
+}
 
 
 // --- FUNGSI NAVIGASI HALAMAN ---
@@ -200,7 +245,16 @@ if (restartGameBtn) {
     restartGameBtn.addEventListener('click', restartGame);
 }
 
+startRulesBtn.addEventListener('click', () => {
+    showPage('rules-page');
+    loadRulesData(); // <<< PANGGIL FUNGSI INI DI SINI
+});
+
 // Inisialisasi: Tampilkan Cover Page saat halaman dimuat
 document.addEventListener('DOMContentLoaded', () => {
+    // 1. Load Data terlebih dahulu
+    loadGameData();
+
+    // 2. Tampilkan Cover Page
     showPage('cover-page');
 });

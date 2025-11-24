@@ -17,8 +17,14 @@
     font-family: 'Poppins', sans-serif;
 }
 
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%; 
+    overflow: auto;
+}
+
 body {
-    /* Background default cadangan/jika tidak ada page yang aktif */
     background-color: #111111; 
     color: var(--text-light);
     display: flex;
@@ -26,40 +32,34 @@ body {
     align-items: center;
     min-height: 100vh;
     padding: 0; 
-    overflow: hidden; 
 }
 
 .main-wrapper {
     position: relative;
     width: 100vw; 
-    height: 100vh; 
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    overflow: visible; 
 }
 
 /* Page Transitions */
 .page {
-    /* PENTING: Position absolute + mengisi penuh layar */
     position: absolute;
     top: 0;
     left: 0;
     width: 100vw; 
-    height: 100vh; 
-    
-    /* Gunakan Flexbox untuk memusatkan KONTEN di dalam halaman */
+    min-height: 100vh; 
+    height: auto; 
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Pusatkan vertikal */
-    align-items: center; /* Pusatkan horizontal */
-
+    justify-content: center;
+    align-items: center;
     background: transparent; 
     padding: 0; 
     text-align: center;
     transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
-    
-    /* Atur default background agar tidak mengganggu transisi */
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
@@ -80,10 +80,11 @@ body {
 
 /* --- 1. Cover Page Styles (Background Koloseum/Gambar 9818c1.jpg) --- */
 #cover-page {
-    /* Background Khusus Cover Page */
-    background-image: url('../img/background.webp'); /* GANTI dengan path ke gambar Koloseum Anda (misalnya 'img/9818c1.jpg') */
-    /* Pastikan gambar Koloseum Anda diletakkan di dalam folder img/ */
-    background-color: #000000; /* Fallback */
+    height: 100vh; 
+    width: 100vw;
+    position: relative;
+    background-image: url('../img/background.webp'); 
+    background-color: #000000;
 }
 
 /* Tambahkan overlay gelap di atas background cover page */
@@ -94,7 +95,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Overlay lebih tipis agar gambar Colosseum terlihat */
+    background: rgba(0, 0, 0, 0.5); 
     z-index: 1;
 }
 
@@ -176,8 +177,8 @@ body {
 /* --- 2. Rules Page Styles (Background Hutan Berkabut) --- */
 #rules-page {
     /* Background Khusus Rules Page */
-    background-image: url('../img/background.webp'); /* Hutan Berkabut */
-    background-color: #101010; /* Fallback */
+    background-image: url('../img/background.webp'); 
+    background-color: #101010; 
     position: relative; 
 }
 
@@ -189,7 +190,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Overlay gelap kuat agar teks terbaca */
+    background: rgba(0, 0, 0, 0.5);
     z-index: 1;
 }
 
@@ -273,7 +274,7 @@ body {
 /* --- 3. Game Page Styles (Trivia Blitz - Background Nebula/Gelap) --- */
 #game-page {
     /* Background Khusus Game Page */
-    background-image: url('../img/background-game.webp'); /* Menggunakan nebula/latar gelap Anda (seperti dari body semula) */
+    background-image: url('../img/background-game.webp');
     background-color: #1A1A2E;
     position: relative;
 }
@@ -293,7 +294,6 @@ body {
 #game-page .game-container {
     /* Box utama game */
     background: rgba(36, 36, 64, 0.9); 
-    /* ... style lainnya tetap sama ... */
     z-index: 2;
 }
 
@@ -478,7 +478,7 @@ body {
 /* --- 4. Finish Page Styles --- */
 #finish-page {
     /* Background Khusus untuk Finish Page (bisa sama dengan cover/game) */
-    background-image: url('../img/background.webp'); /* Nebula/Background Gelap */
+    background-image: url('../img/background.webp');
     background-color: #1A1A2E;
     position: relative;
 }
@@ -554,4 +554,155 @@ body {
 @keyframes flash {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.3; }
+}
+
+/* ============================================== */
+/* === MEDIA QUERIES UNTUK TAMPILAN RESPONSIVE === */
+/* ============================================== */
+
+/* --- 1. Tablet dan Layar Kecil (Max Width: 992px) --- */
+@media (max-width: 992px) {
+    
+    /* Global Container */
+    .cover-text-overlay,
+    .rules-content-wrapper,
+    #game-page .game-container,
+    .finish-content-overlay {
+        width: 95vw; /* Lebarkan sedikit di tablet */
+        max-width: none;
+        padding: 40px 30px;
+    }
+
+    /* Cover Page */
+    .main-title {
+        font-size: clamp(3em, 10vw, 5em); /* Izinkan judul lebih besar di mobile/tablet */
+    }
+
+    /* Rules Page */
+    .rules-content-wrapper {
+        min-height: 80vh; /* Tambahkan tinggi minimal */
+    }
+
+    .rules-content ol li {
+        padding-left: 35px; /* Kurangi padding untuk nomor */
+        font-size: 1.1em;
+    }
+    
+    .rules-content ol li::before {
+        font-size: 1.3em;
+    }
+}
+
+
+/* --- 2. Mobile / Ponsel (Max Width: 600px) --- */
+@media (max-width: 600px) {
+
+    /* Base Styles */
+    body {
+        /* Hapus overflow hidden untuk debugging, jika ada konten terpotong */
+        overflow-y: auto;
+    }
+
+    /* Cover Page */
+    .cover-text-overlay {
+        padding: 30px 20px;
+        min-height: 70vh;
+        gap: 10px;
+    }
+    
+    .main-title {
+        font-size: clamp(2.5em, 12vw, 4em); /* Pastikan judul sangat responsif */
+        letter-spacing: 3px;
+    }
+    
+    .top-logo-placeholder {
+        font-size: 1.2em;
+    }
+    
+    .subtitle-box {
+        padding: 8px 15px;
+        margin: 10px 0;
+    }
+    
+    .main-btn {
+        padding: 12px 25px;
+        font-size: 1.1em;
+    }
+
+    /* Rules Page */
+    .rules-content-wrapper {
+        padding: 30px 20px;
+    }
+    
+    .rules-title {
+        font-size: 2em;
+    }
+
+    .rules-content {
+        padding: 15px;
+    }
+
+    .rules-content ol li {
+        font-size: 1em;
+        margin-bottom: 10px;
+        padding-left: 30px;
+    }
+    
+    .rules-content ol li::before {
+        font-size: 1.2em;
+    }
+
+    /* Game Page */
+    #game-page .game-container {
+        padding: 3vh 3vw;
+        /* KUNCI: Kurangi tinggi agar tombol terlihat */
+        height: auto; /* Biarkan tinggi menyesuaikan konten */
+        min-height: 95vh; /* Pastikan ia tetap terlihat besar */
+        
+        /* Tambahkan padding di bagian bawah agar tombol tidak menempel */
+        padding-bottom: 50px; 
+    }
+
+    /* Timer Area */
+    #game-page .timer-area {
+        width: 80%; /* Lebih lebar di mobile */
+        height: 7vh; 
+        min-height: 50px;
+    }
+
+    #game-page #timer-display {
+        font-size: 3em;
+        line-height: 7vh;
+        min-height: 50px;
+    }
+    
+    #game-page #current-question {
+        font-size: 1.5em; /* Kecilkan ukuran font soal */
+    }
+    
+    /* Controls Button */
+    #game-page .controls {
+        flex-direction: column; 
+        gap: 10px;
+        /* Tambahkan margin atas untuk menjauhkan dari answer box */
+        margin-top: 20px; 
+    }
+
+    #game-page .controls button {
+        padding: 12px 20px;
+        font-size: 1em;
+    }
+
+    /* Finish Page */
+    .finish-content-overlay {
+        padding: 40px 20px;
+    }
+    
+    .finish-title {
+        font-size: 3em;
+    }
+    
+    .finish-subtitle {
+        font-size: 1.5em;
+    }
 }
