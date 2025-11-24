@@ -1,0 +1,12 @@
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# Visual Studio Code / IDE Config (Project-specific)
+.vscode/
+
+# Log files
+*.log
