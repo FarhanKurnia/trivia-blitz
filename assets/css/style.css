@@ -294,7 +294,8 @@ body {
 #game-page .game-container {
     /* Box utama game */
     background: rgba(36, 36, 64, 0.9); 
-    padding: 20px;
+    padding: 50px;
+    border-radius: 15px; 
     z-index: 2;
 }
 
