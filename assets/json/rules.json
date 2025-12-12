@@ -1,7 +1,9 @@
 [
-    "Tantangan ini akan menguji kemampuan berpikir, konsentrasi, dan pengetahuan para peserta.",
-    "Terdapat 15 soal pengetahuan umum dan trivia.",
-    "Tim yang telah menemukan jawaban dipersilakan membunyikan alat yang tersedia.",
-    "Tim yang paling cepat menekan alat berhak memberikan jawaban.",
-    "Jika jawaban benar, tim memperoleh skor. Jika jawaban salah, tidak ada pengurangan nilai dan permainan langsung berlanjut ke soal berikutnya."
+    "Setiap tim menggunakan MultiBuzz untuk berebut kesempatan menjawab.",
+    "Tim yang menekan MultiBuzz paling cepat berhak menjawab lebih dahulu.",
+    "Tim hanya boleh menjawab setelah dipersilakan oleh MC.",
+    "Jika jawaban salah, pertanyaan langsung lanjut ke nomor berikutnya.",
+    "Tidak ada pengurangan poin untuk jawaban salah.",
+    "Setelah seluruh pertanyaan selesai, tim acara akan melakukan perhitungan skor.",
+    "Lima tim dengan skor tertinggi akan melaju ke babak berikutnya."
 ]
