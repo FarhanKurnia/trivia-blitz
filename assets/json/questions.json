@@ -1,9 +1,12 @@
 [
-    { "id": 1, "pertanyaan": "Ibu kota negara Jepang adalah...", "jawaban_benar": "Tokyo" },
-    { "id": 2, "pertanyaan": "Satuan dasar untuk gaya dalam sistem SI adalah...", "jawaban_benar": "Newton" },
-    { "id": 3, "pertanyaan": "Siapa Presiden pertama Republik Indonesia?", "jawaban_benar": "Soekarno" },
-    { "id": 4, "pertanyaan": "Organ tubuh yang berfungsi memompa darah ke seluruh tubuh adalah...", "jawaban_benar": "Jantung" },
-    { "id": 5, "pertanyaan": "Planet keenam dari Matahari adalah...", "jawaban_benar": "Saturnus" },
-    { "id": 6, "pertanyaan": "Sungai terpanjang di dunia adalah Sungai...", "jawaban_benar": "Nil" },
-    { "id": 7, "pertanyaan": "Berapa hari dalam setahun kabisat?", "jawaban_benar": "366" }
+    { "id": 1, "pertanyaan": "Istilah kenaikan harga secara umum disebut...", "jawaban_benar": "Inflasi" },
+    { "id": 2, "pertanyaan": "Benua terbesar di dunia adalah...", "jawaban_benar": "Asia" },
+    { "id": 3, "pertanyaan": "Kerajaan Islam pertama di Indonesia adalah...", "jawaban_benar": "Samudra Pasai" },
+    { "id": 4, "pertanyaan": "Berapa jumlah rakaat salat fardu dalam satu hari semalam?", "jawaban_benar":"17"},
+    { "id": 5, "pertanyaan": "Mamalia dengan masa kehamilan terpanjang adalah...", "jawaban_benar": "Gajah" },
+    { "id": 6, "pertanyaan": "Apa organ tubuh manusia yang paling besar?", "jawaban_benar": "Kulit" },
+    { "id": 7, "pertanyaan": "Apa kepanjangan dari URL?", "jawaban_benar": "Uniform Resource Locator" },
+    { "id": 8, "pertanyaan": "Output dari: console.log(2 + '2') adalah…", "jawaban_benar": "22" },
+    { "id": 9, "pertanyaan": "Apa teks standar yang pertama kali dipelajari setiap orang saat baru belajar coding?", "jawaban_benar": "Hello World" },
+    { "id": 10, "pertanyaan": "Ayah Mary punya lima anak: Nana, Nene, Nini, Nono. Siapa nama anak kelima?", "jawaban_benar":"Mery"}
 ]
